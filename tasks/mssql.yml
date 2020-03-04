@@ -1,0 +1,30 @@
+---
+
+- name: deploy the mysql database container
+  docker_container:
+    name: '{{ db_container }}'
+    image: mcr.microsoft.com/mssql/server
+    volumes:
+      - "{{ db_container }}-data:/var/opt/mssql"
+    env:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "{{ db_pass }}"
+    networks:
+      - name: "{{ db_network }}"
+    networks_cli_compatible: true
+    ports:
+      - 1433:1433
+    restart_policy: always
+
+# Unlike some of the other supported databases, like PostgreSQL, MySQL or MariaDB, SQL Server does not support creating the initial database through an environment variable. Consequently, the database must be created. From https://hub.docker.com/r/jboss/keycloak/
+- name: create the database
+  docker_container:
+    name: '{{ db_container }}-bootstrap'
+    image: mcr.microsoft.com/mssql-tools
+    command: >
+      /bin/bash
+      -c 
+      'until /opt/mssql-tools/bin/sqlcmd -S {{ db_container }} -U sa -P "{{ db_pass }}" -Q "create database {{ db_name }}"; do sleep 5; done'
+    networks:
+      - name: "{{ db_network }}"
+    networks_cli_compatible: true

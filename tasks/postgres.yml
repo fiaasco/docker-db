@@ -1,0 +1,35 @@
+---
+
+- name: deploy the postgres database container
+  docker_container:
+    name: '{{ db_container }}'
+    image: postgres:9.6
+    volumes:
+      - "{{ db_container }}-data:/var/lib/postgresql/data"
+    env:
+      POSTGRES_USER: "{{ db_user }}"
+      POSTGRES_DB: "{{ db_name }}"
+      POSTGRES_PASSWORD: "{{ db_pass }}"
+      POSTGRES_INITDB_ARGS: "--locale=C.UTF-8"
+    networks:
+      - name: "{{ db_network }}"
+    networks_cli_compatible: true
+    restart_policy: always
+
+- name: deploy the postgres database backup container
+  docker_container:
+    name: '{{ db_container }}-backup'
+    volumes:
+      - "{{ db_container }}-backup:/backups"
+      - /etc/localtime:/etc/localtime:ro
+    env:
+      DBHOST: "{{ db_container }}"
+      PASSWORD: "{{ db_pass }}"
+      USERNAME: "{{ db_user }}"
+      DBNAMES: "{{ db_name }}"
+      LATEST: "yes"
+    image: ppadial/autopostgresqlbackup:latest
+    networks:
+      - name: "{{ db_network }}"
+    networks_cli_compatible: true
+    restart_policy: always

@@ -1,0 +1,10 @@
+---
+
+# Describe the default variables while documenting them.
+# Eg.
+
+## description: single line to describe what the variable sets
+## type: string|bool|dict|list
+#docker-db_variable: default_value
+
+docker_app: ""

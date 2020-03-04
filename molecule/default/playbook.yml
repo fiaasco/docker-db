@@ -1,0 +1,21 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: docker-db
+
+    - role: docker-db
+      vars:
+        docker_app: moleculemysql
+        db_type: mysql
+        db_name: molecule
+        db_user: molecule
+        db_pass: molepass
+
+    - role: docker-db
+      vars:
+        docker_app: moleculepsql
+        db_type: postgres
+        db_name: molecule
+        db_user: molecule
+        db_pass: molepass

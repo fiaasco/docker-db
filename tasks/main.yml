@@ -1,0 +1,15 @@
+---
+
+- when: docker_app|string
+  block:
+    - name: set the facts
+      set_fact:
+        db_container: "{{ docker_app }}-database-{{ db_type }}"
+        db_network: "{{ docker_app }}-network"
+
+    - name: create the underlying network
+      docker_network:
+        name: "{{ db_network }}"
+        state: present
+
+    - include_tasks: "{{ db_type }}.yml"

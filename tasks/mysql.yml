@@ -1,0 +1,34 @@
+---
+
+- name: deploy the mysql database container
+  docker_container:
+    name: '{{ db_container }}'
+    image: mysql:5.7
+    volumes:
+      - "{{ db_container }}-data:/var/lib/mysql"
+    env:
+      MYSQL_USER: "{{ db_user }}"
+      MYSQL_DATABASE: "{{ db_name }}"
+      MYSQL_PASSWORD: "{{ db_pass }}"
+      MYSQL_ROOT_PASSWORD: "{{ db_pass }}"
+    networks:
+      - name: "{{ db_network }}"
+    networks_cli_compatible: true
+    restart_policy: always
+
+- name: deploy the mysql database backup container
+  docker_container:
+    name: '{{ db_container }}-backup'
+    image: selim13/automysqlbackup:2.6-5-debian
+    volumes:
+      - "{{ db_container }}-backup:/backup"
+    env:
+      DBHOST: "{{ db_container }}"
+      PASSWORD: "{{ db_pass }}"
+      USERNAME: root
+      DBEXCLUDE: "performance_schema information_schema"
+      CRON_SCHEDULE: "0 0 * * *"
+    networks:
+      - name: "{{ db_network }}"
+    networks_cli_compatible: true
+    restart_policy: always
