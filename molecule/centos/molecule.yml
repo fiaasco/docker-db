@@ -4,12 +4,12 @@ dependency:
 driver:
   name: docker
 scenario:
-  name: default
+  name: centos
 lint:
   name: yamllint
 platforms:
-  - name: docker-db-debian-10
-    image: debian:10
+  - name: docker-db-centos-7
+    image: centos:7
     command: /lib/systemd/systemd
     privileged: true
 provisioner:

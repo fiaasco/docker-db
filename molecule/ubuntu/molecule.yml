@@ -4,12 +4,12 @@ dependency:
 driver:
   name: docker
 scenario:
-  name: default
+  name: ubuntu
 lint:
   name: yamllint
 platforms:
-  - name: docker-db-debian-10
-    image: debian:10
+  - name: docker-db-ubuntu-bionic
+    image: ubuntu:bionic
     command: /lib/systemd/systemd
     privileged: true
 provisioner:

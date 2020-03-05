@@ -13,6 +13,8 @@ install:
   - pip install -r requirements.txt
 
 env:
+  - SCENARIO=ubuntu
+  - SCENARIO=centos
   - SCENARIO=default
 
 script: "molecule test --scenario-name $SCENARIO"
