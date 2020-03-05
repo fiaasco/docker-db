@@ -12,6 +12,8 @@ platforms:
     image: debian:10
     command: /lib/systemd/systemd
     privileged: true
+    volumes:
+      - /etc/docker/daemon.json:/etc/docker/daemon.json:ro
 provisioner:
   name: ansible
   config_options:
