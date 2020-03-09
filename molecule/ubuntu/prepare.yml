@@ -2,4 +2,4 @@
 - name: Prepare
   hosts: all
   roles:
-    - role: docker
+    - role: fiaasco.docker
