@@ -13,7 +13,7 @@ platforms:
     command: /lib/systemd/systemd
     privileged: true
     volumes:
-      - /etc/docker/daemon.json:/etc/docker/daemon.json:ro
+      - /tmp/docker-db-centos-7:/var/lib/docker
 provisioner:
   name: ansible
   config_options:
