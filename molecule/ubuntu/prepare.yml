@@ -1,5 +1,7 @@
 ---
 - name: Prepare
   hosts: all
+  pre_tasks:
+    - shell: /bin/rm -rf /var/lib/docker/*
   roles:
-    - role: docker
+    - role: fiaasco.docker

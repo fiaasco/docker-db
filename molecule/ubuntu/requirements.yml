@@ -2,4 +2,4 @@
 
 - src: https://github.com/FiaasCo/docker
   version: master
-  name: docker
+  name: fiaasco.docker
