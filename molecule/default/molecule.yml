@@ -5,29 +5,28 @@ driver:
   name: docker
 scenario:
   name: default
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
 platforms:
-  - name: docker-db-debian-10
-    image: debian:10
+  - name: docker-db-debian-11
+    image: debian:11
     command: /lib/systemd/systemd
     privileged: true
     volumes:
-      - /tmp/docker-db-debian-10:/var/lib/docker
+      - /tmp/docker-db-debian-11:/var/lib/docker
 provisioner:
   name: ansible
   config_options:
     defaults:
-      callback_whitelist: profile_tasks
+      callbacks_enabled: profile_tasks
       gather_timeout: 30
       interpreter_python: auto
       jinja2_extensions: jinja2.ext.do
       timeout: 30
     ssh_connection:
       pipelining: true
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
-  lint:
-    name: flake8

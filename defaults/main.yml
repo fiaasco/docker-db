@@ -1,10 +1,12 @@
 ---
+# description: postresql container image to user
+# type: string
+db_pg_image: "postgres:14.7"
 
-# Describe the default variables while documenting them.
-# Eg.
+# description: mysql container image to user
+# type: string
+db_mysql_image: "mysql:8.0.32"
 
-## description: single line to describe what the variable sets
-## type: string|bool|dict|list
-# docker-db_variable: default_value
-
+# description: app using the db
+# type: string
 docker_app: ""

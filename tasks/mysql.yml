@@ -3,7 +3,7 @@
 - name: deploy the mysql database container
   docker_container:
     name: '{{ db_container }}'
-    image: mysql:5.7
+    image: "{{ db_mysql_image }}"
     volumes:
       - "{{ db_container }}-data:/var/lib/mysql"
     env:

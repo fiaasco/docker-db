@@ -3,7 +3,7 @@
 - name: deploy the postgres database container
   docker_container:
     name: '{{ db_container }}'
-    image: postgres:9.6
+    image: "{{ db_pg_image }}"
     volumes:
       - "{{ db_container }}-data:/var/lib/postgresql/data"
     env:
